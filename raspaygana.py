@@ -5,49 +5,83 @@ import random
 # global cont
 cont = 0
 historial = []
+botones = []
 
-root = customtkinter.CTk()
-root.geometry("800x480")
-root.title("Raspa y Gana")
-root.anchor = CENTER
+def reiniciar():
+    global botones, cont, historial
+    print("Reiniciando")
+    cont = 0
+    # color = boton.cget(color)
+    for boton in botones:
+        boton.configure(text="", fg_color="lightblue")
 
 def on_button_click(button):
     global cont, historial, root
     cont += 1
     random_number = random.randint(1, 3)
+    print("numero > ", random_number)
     historial.append(random_number)
     # button.config(text="clicked")
     button.configure(fg_color="red", text = random_number)
     print("Button clicked")
     print(cont)
     if cont >= 3:
+        for numero in historial:
+            print( "numero -> ",numero)
+        reiniciar()
         print("Contador mayor a 3")
         if historial[0] == historial[1] == historial[2]:
+            historial.clear()
             print("Ganaste")
-            pantWin = customtkinter.CTkLabel(master=root, text="Ganaste", fg_color="green")
+            WindowWin = customtkinter.CTk()
+            pantWin = customtkinter.CTkLabel(master=WindowWin, text="Ganaste", fg_color="green")
             pantWin.place(relx=0.5, rely=0.5, anchor=CENTER)
+            WindowWin.mainloop()
+            
+            # root.destroy()
         else:
+            historial.clear()
             print("Perdiste")
-            pantWin = customtkinter.CTkLabel(master=root, text="Perdiste", fg_color="red")
+            WindowLose = customtkinter.CTk()
+            pantWin = customtkinter.CTkLabel(master=WindowLose, text="Perdiste", fg_color="red")
             pantWin.place(relx=0.5, rely=0.5, anchor=CENTER)
+            WindowLose.mainloop()
+            
+            # root.destroy()
+            
+            
+
 
 def main(): 
     # Create instance of Tk
-    
+    root = customtkinter.CTk()
+    root.geometry("800x480")
+    root.title("Raspa y Gana")
+    root.anchor = CENTER
     
 
     # # Create instance of customtkinter
     # ctk = customtkinter.CTk()
+    global botones
 
     button1 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button1))
+    botones.append(button1)
     button2 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button2))
+    botones.append(button2)
     button3 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button3))
+    botones.append(button3)
     button4 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button4))
+    botones.append(button4)
     button5 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button5))
+    botones.append(button5)
     button6 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button6))
+    botones.append(button6)
     button7 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button7))
+    botones.append(button7)
     button8 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button8))
+    botones.append(button8)
     button9 = customtkinter.CTkButton( master=root, text="", command=lambda: on_button_click(button9))
+    botones.append(button9)
     
     button1.place(relx=0.3, rely=0.25, anchor=CENTER)
     button2.place(relx=0.5, rely=0.25, anchor=CENTER)
