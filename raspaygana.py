@@ -6,8 +6,13 @@ import random
 cont = 0
 historial = []
 
+root = customtkinter.CTk()
+root.geometry("800x480")
+root.title("Raspa y Gana")
+root.anchor = CENTER
+
 def on_button_click(button):
-    global cont, historial
+    global cont, historial, root
     cont += 1
     random_number = random.randint(1, 3)
     historial.append(random_number)
@@ -19,15 +24,16 @@ def on_button_click(button):
         print("Contador mayor a 3")
         if historial[0] == historial[1] == historial[2]:
             print("Ganaste")
+            pantWin = customtkinter.CTkLabel(master=root, text="Ganaste", fg_color="green")
+            pantWin.place(relx=0.5, rely=0.5, anchor=CENTER)
         else:
             print("Perdiste")
+            pantWin = customtkinter.CTkLabel(master=root, text="Perdiste", fg_color="red")
+            pantWin.place(relx=0.5, rely=0.5, anchor=CENTER)
 
 def main(): 
     # Create instance of Tk
-    root = customtkinter.CTk()
-    root.geometry("800x480")
-    root.title("Raspa y Gana")
-    root.anchor = CENTER
+    
     
 
     # # Create instance of customtkinter
