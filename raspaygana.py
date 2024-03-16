@@ -34,6 +34,7 @@ def on_button_click(button):
             historial.clear()
             print("Ganaste")
             WindowWin = customtkinter.CTk()
+            WindowWin.anchor = CENTER
             pantWin = customtkinter.CTkLabel(master=WindowWin, text="Ganaste", fg_color="green")
             pantWin.place(relx=0.5, rely=0.5, anchor=CENTER)
             WindowWin.mainloop()
@@ -43,6 +44,7 @@ def on_button_click(button):
             historial.clear()
             print("Perdiste")
             WindowLose = customtkinter.CTk()
+            WindowLose.anchor = CENTER
             pantWin = customtkinter.CTkLabel(master=WindowLose, text="Perdiste", fg_color="red")
             pantWin.place(relx=0.5, rely=0.5, anchor=CENTER)
             WindowLose.mainloop()
