@@ -8,7 +8,7 @@ root.title("Home")
 root.anchor = CENTER
 
 
-button = customtkinter.CTkButton( master=root, text="raspaygana", command=raspaygana.main)
+button = customtkinter.CTkButton( master=root, text="raspa y gana", command=raspaygana.main)
 button2 = customtkinter.CTkButton( master=root, text="2")
 button3 = customtkinter.CTkButton( master=root, text="3")
 button4 = customtkinter.CTkButton( master=root, text="4")

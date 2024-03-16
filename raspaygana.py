@@ -2,13 +2,13 @@ from tkinter import *
 import customtkinter
 
 cont = 0
-historial  = []
 
 def on_button_click(button):
-    cont += 1
+    cont = cont + 1
     # button.config(text="clicked")
     button.configure(fg_color="red")
     print("Button clicked")
+    print(cont)
 
 def main(): 
     # Create instance of Tk
@@ -16,6 +16,7 @@ def main():
     root.geometry("800x480")
     root.title("Raspa y Gana")
     root.anchor = CENTER
+    
 
     # # Create instance of customtkinter
     # ctk = customtkinter.CTk()
