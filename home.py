@@ -1,6 +1,7 @@
 from tkinter import *
 import customtkinter
 import raspaygana
+import sudoku
 
 
 
@@ -11,8 +12,8 @@ def main():
     root.anchor = CENTER
 
 
-    button = customtkinter.CTkButton( master=root, text="raspa y gana", command=raspaygana.main)
-    button2 = customtkinter.CTkButton( master=root, text="2")
+    button = customtkinter.CTkButton( master=root, text="Raspa y Gana", command=raspaygana.main)
+    button2 = customtkinter.CTkButton( master=root, text="Sudoku", command=sudoku.main)
     button3 = customtkinter.CTkButton( master=root, text="3")
     button4 = customtkinter.CTkButton( master=root, text="4")
     button5 = customtkinter.CTkButton( master=root, text="5")
