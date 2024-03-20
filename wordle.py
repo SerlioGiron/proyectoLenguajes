@@ -15,13 +15,13 @@ class WordleGame:
         self.attempts_left = 5
         self.current_attempt = 0
 
-        self.draw_word_display()
+        # self.draw_word_display()
         self.draw_input_grid()
         self.draw_attempts_display()
 
-    def draw_word_display(self):
-        self.word_display = tk.Label(self.master, text=" ".join(["_" for _ in range(5)]), font=('Arial', 16))
-        self.word_display.pack(pady=10)
+    # def draw_word_display(self):
+    #     self.word_display = tk.Label(self.master, text=" ".join(["_" for _ in range(5)]), font=('Arial', 16))
+    #     self.word_display.pack(pady=10)
 
     def draw_input_grid(self):
         self.input_entries = []
@@ -61,29 +61,33 @@ class WordleGame:
 
         self.current_attempt += 1
 
+        correct_letters = [letter for letter, secret_letter in zip(attempt, self.secret_word) if letter == secret_letter]
+
         if attempt == self.secret_word:
-            self.word_display.config(text=self.secret_word.upper(), fg='green')
             messagebox.showinfo("Congratulations!", "You guessed the word correctly!")
             self.disable_input_entries()
         else:
             self.attempts_left -= 1
             self.attempts_display.config(text=f"Attempts Left: {self.attempts_left}")
             if self.attempts_left == 0:
-                self.word_display.config(text=self.secret_word.upper(), fg='red')
                 messagebox.showinfo("Game Over", f"You've run out of attempts. The word was {self.secret_word}.")
                 self.disable_input_entries()
             else:
-                self.update_word_display(attempt)  # Pass only attempt to update_word_display
+                self.update_word_display(attempt, correct_letters)  # Pass correct_letters to update_word_display
                 self.enable_next_attempt()  # Enable the next row for input
 
         for entry in current_row:
             entry.delete(0, tk.END)
 
-
-
-    def update_word_display(self, guess):
-        revealed_letters = [letter if letter == self.secret_word[i] else "_" for i, letter in enumerate(guess)]
-        self.word_display.config(text=" ".join(revealed_letters))
+    def update_word_display(self, guess, correct_letters):
+        revealed_letters = [f"{letter.upper()}" if letter in correct_letters else "_" for letter in guess]
+        for entry, letter in zip(self.input_entries[self.current_attempt], revealed_letters):
+            entry.delete(0, tk.END)
+            entry.insert(0, letter)
+            if letter in correct_letters:
+                entry.config(fg='green')
+            else:
+                entry.config(fg='black')
 
     def disable_input_entries(self):
         for row_entries in self.input_entries:
