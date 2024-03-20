@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+import inspect  # Add this import
+
 
 class WordleGame:
     def __init__(self, master):
@@ -9,6 +11,7 @@ class WordleGame:
 
         self.words = ["apple", "table", "chair", "smile", "brain", "house", "happy", "candy", "beach", "dream"]  # List of five-letter words
         self.secret_word = random.choice(self.words)
+        print("Secret word:", self.secret_word)  # Print the secret word
         self.attempts_left = 5
         self.current_attempt = 0
 
@@ -41,8 +44,10 @@ class WordleGame:
             messagebox.showinfo("Game Over", "You've run out of attempts.")
             return
 
+        print("Checking grid lines:")
         current_row = self.input_entries[self.current_attempt]
-        for entry in current_row:
+        for i, entry in enumerate(current_row):
+            print(f"Row {self.current_attempt + 1}, Column {i + 1}: {entry.get()}")
             if not entry.get():
                 messagebox.showerror("Incomplete Guess", "Please fill all grids in the current row.")
                 return
@@ -51,6 +56,8 @@ class WordleGame:
         if len(attempt) != 5 or not attempt.isalpha():
             messagebox.showerror("Invalid Guess", "Please enter a valid five-letter word.")
             return
+
+        print("Current attempt:", attempt)
 
         self.current_attempt += 1
 
@@ -73,6 +80,7 @@ class WordleGame:
             entry.delete(0, tk.END)
 
 
+
     def update_word_display(self, guess):
         revealed_letters = [letter if letter == self.secret_word[i] else "_" for i, letter in enumerate(guess)]
         self.word_display.config(text=" ".join(revealed_letters))
@@ -83,7 +91,7 @@ class WordleGame:
                 entry.config(state='disabled')
 
     def enable_next_attempt(self):
-        if self.current_attempt < 4:  # Ensure we're not enabling the last row
+        if self.current_attempt < 5:  # Ensure we're not enabling the last row
             current_row_entries = self.input_entries[self.current_attempt]
             current_row_values = [entry.get() for entry in current_row_entries]
             next_row = self.input_entries[self.current_attempt]
@@ -97,7 +105,7 @@ class WordleGame:
             for entry in next_row:
                 entry.config(state='normal')
 
-            self.current_attempt += 1
+            #self.current_attempt += 1|
 
             # Restore the current row's values
             for entry, value in zip(current_row_entries, current_row_values):
