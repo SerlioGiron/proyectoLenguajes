@@ -2,8 +2,8 @@ from tkinter import *
 import customtkinter
 import raspaygana
 import sudoku
-
-
+import wordle
+import Buscaminas
 
 def main(): 
     root = customtkinter.CTk()
@@ -11,13 +11,11 @@ def main():
     root.title("Home")
     root.anchor = CENTER
 
-
     button = customtkinter.CTkButton( master=root, text="Raspa y Gana", command=raspaygana.main)
     button2 = customtkinter.CTkButton( master=root, text="Sudoku", command=sudoku.main)
-    button3 = customtkinter.CTkButton( master=root, text="3")
-    button4 = customtkinter.CTkButton( master=root, text="4")
+    button3 = customtkinter.CTkButton( master=root, text="Wordle", command=wordle.main)
+    button4 = customtkinter.CTkButton( master=root, text="Buscaminas", command=Buscaminas.main)
     button5 = customtkinter.CTkButton( master=root, text="5")
-
 
     button.place(relx=0.5, rely=0.1, anchor=CENTER)
     button2.place(relx=0.5, rely=0.25, anchor=CENTER)
