@@ -3,6 +3,7 @@ import customtkinter
 import random
 
 # global cont
+# comentario
 cont = 0
 historial = []
 botones = []
