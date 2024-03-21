@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 import random
 import copy
 import time
@@ -126,7 +127,7 @@ class SudokuGrid:
             elapsed_time = time.time() - self.start_time
             minutes = int(elapsed_time // 60)
             seconds = int(elapsed_time % 60)
-            print(f"Ganó! Lo logró en {minutes} minutos y {seconds} segundos!")
+            messagebox.showinfo("Sudoku",f"Ganó! Lo logró en {minutes} minutos y {seconds} segundos!")
             self.master.after_cancel(self.timer_id)
                 
     def draw_timer(self):
@@ -138,7 +139,7 @@ class SudokuGrid:
         minutes = elapsed_time // 60
         seconds = elapsed_time % 60
         self.timer_label.config(text=f"Tiempo: {minutes:02d}:{seconds:02d}")
-        self.timer_id = self.master.after(1000, self.update_timer)  
+        self.timer_id = self.master.after(1000, self.update_timer)
                 
     def on_entry_keypress(self, event, row, col):
         if event.char.isdigit():
@@ -156,9 +157,25 @@ class SudokuGrid:
         return self.solution[row][col] == num
                 
     def print_solution(self):
-        print("Solución:")
+        messagebox.showinfo("Sudoku", "Se rindió! Aquí está la solución.")
+        solucion = "Solución:\n"
         for row in self.solution:
-            print(row)
+            solucion += ' '.join(map(lambda x: f"{x} ", row)) + '\n'
+        messagebox.showinfo("Sudoku", solucion)
+        self.reset_game()
+
+    def reset_game(self):
+        for i in range(self.grid_size):
+            for j in range(self.grid_size):
+                self.user_input[(i, j)] = 0
+        self.start_time = time.time()
+        if self.timer_id:
+            self.master.after_cancel(self.timer_id)
+            self.timer_id = None  # Reset the timer ID
+        self.update_timer()
+        self.master.destroy()
+        main()
+
 
     def get_row(self, row):
         return self.grid[row]
@@ -171,7 +188,7 @@ class SudokuGrid:
         return [self.grid[i][j] for i in range(start_row, start_row + 3) for j in range(start_col, start_col + 3)]
     
     def draw_solution_button(self):
-        self.solution_button = tk.Button(self.master, text="Imprimir Solución", command=self.print_solution)
+        self.solution_button = tk.Button(self.master, text="Rendirse", command=self.print_solution)
         self.solution_button.grid(row=self.grid_size + 1, columnspan=self.grid_size, padx=10, pady=5)
 
     def check_win(self):
@@ -183,14 +200,14 @@ class SudokuGrid:
         return True
     
     def draw_check_button(self):
-        self.check_button = tk.Button(self.master, text="Check Si Ganó", command=self.check_win_button_click)
+        self.check_button = tk.Button(self.master, text="Check", command=self.check_win_button_click)
         self.check_button.grid(row=self.grid_size + 2, columnspan=self.grid_size, padx=10, pady=5)
 
     def check_win_button_click(self):
         if self.check_win():
-            print("Ganó!")
+            messagebox.showinfo("Sudoku","Ganó!")
         else:
-            print("Siga Intentando!")
+            messagebox.showinfo("Sudoku","Siga Intentando!")
 
 def main():
     root = tk.Tk()
