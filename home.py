@@ -2,6 +2,7 @@ from tkinter import *
 import customtkinter
 import raspaygana
 import sudoku
+import CarreraTortugas
 import wordle
 import Buscaminas
 import hangman
@@ -13,7 +14,7 @@ def main():
 
     button = customtkinter.CTkButton( master=root, text="Raspa y Gana", command=raspaygana.main)
     button2 = customtkinter.CTkButton( master=root, text="Sudoku", command=sudoku.main)
-    button3 = customtkinter.CTkButton( master=root, text="Wordle", command=wordle.main)
+    button3 = customtkinter.CTkButton( master=root, text="Carrera de Tortugas", command=CarreraTortugas.main)
     button4 = customtkinter.CTkButton( master=root, text="Buscaminas", command=Buscaminas.main)
     button5 = customtkinter.CTkButton( master=root, text="Hangman", command=hangman.main)
 
