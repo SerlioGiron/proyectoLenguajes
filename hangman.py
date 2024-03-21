@@ -4,8 +4,9 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
 root = Tk()
+root.withdraw()
 global letters_images, hangman_images
-
+score = 0
 hangman_dir = os.path.dirname(os.path.abspath(__file__))
 #letters icon
 al = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
@@ -14,16 +15,18 @@ letters_images = {let: ImageTk.PhotoImage(Image.open(os.path.join(hangman_dir, f
 # hangman images
 h123 = ['h1','h2','h3','h4','h5','h6','h7']
 hangman_images = {hangman: PhotoImage(file=f"HangmanRecursosImportantes\\{hangman}.png") for hangman in h123}
+def restart_game():
+    for widget in root.winfo_children():
+        widget.destroy()
+    main()
+def finish_game():
+    for widget in root.winfo_children():
+        widget.destroy()
+    root.withdraw()
 def main():
-    def restart_game():
-        # Cerrar la ventana anterior y crear una nueva
-        root.destroy()
-        main()
-
-    score = 0
+    root.deiconify()
+    global score
     run = True
-    
-    
     # main loop
     while run:
         if root.winfo_width() != 905 or root.winfo_height() != 700:
@@ -69,7 +72,7 @@ def main():
             answer = messagebox.askyesno('ALERT','YOU WANT TO EXIT THE GAME?')
             if answer == True:
                 run = False
-                root.destroy()
+                finish_game()
 
         e1 = ImageTk.PhotoImage(file = 'HangmanRecursosImportantes\\exit.png')
         ex = Button(root,bd = 0,command = close,bg="#E7FFFF",activebackground = "#E7FFFF",font = 10,image = e1)
@@ -80,7 +83,8 @@ def main():
 
         # button press check function
         def check(letter,button):
-            nonlocal count,win_count,run,score
+            nonlocal count,win_count,run
+            global score
             buttons[int(button[1:]) - 1].destroy()
             if letter in selected_word:
                 for i in range(len(selected_word)):
@@ -91,11 +95,10 @@ def main():
                     score += 1
                     answer = messagebox.askyesno('GAME OVER','YOU WON!\nWANT TO PLAY AGAIN?')
                     if answer == True:
-                        run = True
-                        restart_game()   
+                        restart_game()
                     else:
                         run = False
-                        root.destroy()
+                        finish_game()
             else:
                 count += 1
                 hangman_labels[count-1].destroy()
@@ -103,12 +106,11 @@ def main():
                 if count == 6:
                     answer = messagebox.askyesno('GAME OVER','YOU LOST!\nWANT TO PLAY AGAIN?')
                     if answer == True:
-                        run = True
                         score = 0
                         restart_game()
                     else:
                         run = False
-                        root.destroy()         
+                        finish_game()     
         root.mainloop()
 
 if __name__ == "__main__":
