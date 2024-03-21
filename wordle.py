@@ -1,17 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
-import inspect  # Add this import
-
 
 class WordleGame:
     def __init__(self, master):
         self.master = master
         self.master.title("Wordle")
 
-        self.words = ["apple", "table", "chair", "smile", "brain", "house", "happy", "candy", "beach", "dream"]  # List of five-letter words
+        self.words = ["apple", "table", "chair", "smile", "brain", "house", "happy", "candy", "beach", "dream"]
         self.secret_word = random.choice(self.words)
-        print("Secret word:", self.secret_word)  # Print the secret word
+        print("Secret word:", self.secret_word) 
         self.attempts_left = 5
         self.current_attempt = 0
 
@@ -73,29 +71,25 @@ class WordleGame:
                 messagebox.showinfo("Game Over", f"You've run out of attempts. The word was {self.secret_word}.")
                 self.disable_input_entries()
             else:
-                self.update_word_display(attempt)  # Pass only attempt to update_word_display
-                self.enable_next_attempt()  # Enable the next row for input
+                self.update_word_display(attempt)  
+                self.enable_next_attempt()  
 
         for entry in current_row:
             entry.delete(0, tk.END)
 
     def restart_game(self):
-        # Reset game state
         self.secret_word = random.choice(self.words)
         print("Secret word:", self.secret_word)
         self.attempts_left = 5
         self.current_attempt = 0
 
-        # Clear input entries
         for row_entries in self.input_entries:
             for entry in row_entries:
                 entry.delete(0, tk.END)
                 entry.config(state='normal' if row_entries == self.input_entries[0] else 'disabled')
 
-        # Reset word display
         self.word_display.config(text=" ".join(["_" for _ in range(5)]), fg='black')
 
-        # Reset attempts display
         self.attempts_display.config(text=f"Attempts Left: {self.attempts_left}")
 
     def update_word_display(self, guess):
@@ -108,23 +102,20 @@ class WordleGame:
                 entry.config(state='disabled')
 
     def enable_next_attempt(self):
-        if self.current_attempt < 5:  # Ensure we're not enabling the last row
+        if self.current_attempt < 5: 
             current_row_entries = self.input_entries[self.current_attempt]
             current_row_values = [entry.get() for entry in current_row_entries]
             next_row = self.input_entries[self.current_attempt]
             
-            # Disable all rows
             for row_entries in self.input_entries:
                 for entry in row_entries:
                     entry.config(state='disabled')
 
-            # Enable the next row for input
             for entry in next_row:
                 entry.config(state='normal')
 
             #self.current_attempt += 1|
 
-            # Restore the current row's values
             for entry, value in zip(current_row_entries, current_row_values):
                 entry.delete(0, tk.END)
                 entry.insert(0, value)

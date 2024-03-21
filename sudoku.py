@@ -11,8 +11,7 @@ class SudokuGrid:
         
         self.grid_size = 9
         self.grid = [[0]*self.grid_size for _ in range(self.grid_size)]
-        self.user_input = {}  # Dictionary to store user input
-        self.solution = None
+        self.user_input = {} 
         
         self.generate_sudoku()
         self.draw_grid()
