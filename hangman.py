@@ -3,15 +3,29 @@ from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import os
-global letters_images
+root = Tk()
+global letters_images, hangman_images
+
+hangman_dir = os.path.dirname(os.path.abspath(__file__))
+#letters icon
+al = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+letters_images = {let: ImageTk.PhotoImage(Image.open(os.path.join(hangman_dir, f"HangmanRecursosImportantes\\{let}.png"))) for let in al}
+
+# hangman images
+h123 = ['h1','h2','h3','h4','h5','h6','h7']
+hangman_images = {hangman: PhotoImage(file=f"HangmanRecursosImportantes\\{hangman}.png") for hangman in h123}
 def main():
-    global letters_images
+    def restart_game():
+        # Cerrar la ventana anterior y crear una nueva
+        root.destroy()
+        main()
+
     score = 0
     run = True
-
+    
+    
     # main loop
     while run:
-        root = Tk()
         if root.winfo_width() != 905 or root.winfo_height() != 700:
             root.geometry('905x700')
         root.title('HANG MAN')
@@ -32,16 +46,6 @@ def main():
             x += 40
             d.append(Label(root,text="_",bg="#E7FFFF",font=("arial",20)))
             d[-1].place(x=x,y=450)
-
-        hangman_dir = os.path.dirname(os.path.abspath(__file__))
-        #letters icon
-        al = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
-        letters_images = {let: ImageTk.PhotoImage(Image.open(os.path.join(hangman_dir, f"HangmanRecursosImportantes\\{let}.png"))) for let in al}
-
-        # hangman images
-        h123 = ['h1','h2','h3','h4','h5','h6','h7']
-        hangman_images = {hangman: PhotoImage(file=f"HangmanRecursosImportantes\\{hangman}.png") for hangman in h123}
-
         #letters placement
         button = [['b1','a',0,525],['b2','b',70,525],['b3','c',140,525],['b4','d',210,525],['b5','e',280,525],['b6','f',350,525],['b7','g',420,525],['b8','h',490,525],['b9','i',560,525],['b10','j',630,525],['b11','k',700,525],['b12','l',770,525],['b13','m',840,525],['b14','n',0,575],['b15','o',70,575],['b16','p',140,575],['b17','q',210,575],['b18','r',280,575],['b19','s',350,575],['b20','t',420,575],['b21','u',490,575],['b22','v',560,575],['b23','w',630,575],['b24','x',700,575],['b25','y',770,575],['b26','z',840,575]]
 
@@ -67,7 +71,7 @@ def main():
                 run = False
                 root.destroy()
 
-        e1 = PhotoImage(file = 'HangmanRecursosImportantes\\exit.png')
+        e1 = ImageTk.PhotoImage(file = 'HangmanRecursosImportantes\\exit.png')
         ex = Button(root,bd = 0,command = close,bg="#E7FFFF",activebackground = "#E7FFFF",font = 10,image = e1)
         ex.place(x=770,y=10)
         s2 = 'SCORE:'+str(score)
@@ -88,7 +92,7 @@ def main():
                     answer = messagebox.askyesno('GAME OVER','YOU WON!\nWANT TO PLAY AGAIN?')
                     if answer == True:
                         run = True
-                        root.destroy()   
+                        restart_game()   
                     else:
                         run = False
                         root.destroy()
@@ -101,7 +105,7 @@ def main():
                     if answer == True:
                         run = True
                         score = 0
-                        root.destroy()
+                        restart_game()
                     else:
                         run = False
                         root.destroy()         
